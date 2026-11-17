@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B8F4D" />
+<title>RideKaro - Your Ride, Your City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{--g:#0b8f4d;--gd:#087a41;--gs:#e7f5ed;--ink:#14201a;--mute:#6b7a72;--line:#e6ece8;--red:#e5484d;--rs:#fdeaea;--bg:#f3f7f5}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:#dfe9e4;font-size:15px}
+button,input,a{font:inherit;color:inherit}button{background:none;border:0;cursor:pointer;text-align:left}a{text-decoration:none}
+:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+#app{max-width:430px;min-height:100%;margin:0 auto;background:#fff;box-shadow:0 0 40px rgba(0,0,0,.12);position:relative}
+.page{min-height:100vh;display:flex;flex-direction:column}
+.pad{padding:16px 20px}.px{padding:0 16px}.grow{flex:1}.mute{color:var(--mute)}.small{font-size:13px}.gt{color:var(--g);font-weight:600}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#fff;position:relative;z-index:2}
+.hdr h1{font-size:17px;font-weight:600}.hdr.left h1{font-size:21px;font-weight:700}
+.ib{width:36px;height:36px;display:inline-grid;place-items:center;border-radius:50%}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:50px;padding:0 16px;border-radius:10px;background:var(--g);color:#fff;font-weight:600;font-size:16px;text-align:center}
+.btn:disabled{opacity:.5;cursor:not-allowed}.btn:not(:disabled):active{background:var(--gd)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;font-size:15px;margin-top:12px}
+.btn.cancel{background:var(--rs);color:var(--red);margin-top:14px}
+.link{color:var(--g);font-weight:600;display:inline-flex;align-items:center;gap:4px;margin-top:6px}
+.splash{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(#fff 60%,#f0f8f3)}
+.st{text-align:center;padding-top:22vh;display:flex;flex-direction:column;align-items:center;gap:8px}
+.lb{width:76px;height:76px;border-radius:50%;background:var(--g);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px rgba(11,143,77,.3)}
+.lb svg{width:44px;height:44px}
+.lw{font-weight:800;letter-spacing:-.03em;line-height:1.1}.lw b{color:var(--g);font-weight:800}
+.welcome{font-size:24px;font-weight:500;line-height:1.2;margin-bottom:8px}
+.phone{display:flex;border:1px solid var(--line);border-radius:10px;margin:22px 0 16px;overflow:hidden}
+.cc{display:flex;align-items:center;gap:8px;padding:0 14px;border-right:1px solid var(--line);font-weight:500}
+.flag{width:22px;height:16px;border-radius:2px;background:linear-gradient(#ff9933 33%,#fff 33% 66%,#138808 66%)}
+.phone input{flex:1;border:0;padding:15px 14px;outline:0;min-width:0}
+.otp{width:100%;margin:24px 0 12px;border:1px solid var(--line);border-radius:10px;padding:14px;font-size:26px;letter-spacing:.5em;text-align:center}
+.or{display:flex;align-items:center;gap:12px;margin:26px 0 8px;color:var(--mute);font-size:13px}
+.or::before,.or::after{content:'';flex:1;height:1px;background:var(--line)}
+.terms{text-align:center;margin-top:34px;line-height:1.6}.terms b{color:var(--ink);font-weight:600}
+.map{background:#eef1ee;overflow:hidden;position:relative}.map svg{display:block}
+.eta{position:absolute;top:14px;right:16px;background:#fff;padding:6px 12px;border-radius:8px;font-size:13px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.sheet{background:#fff;padding:16px}.sheet.up{margin-top:-22px;border-radius:22px 22px 0 0;box-shadow:0 -6px 20px rgba(0,0,0,.08);position:relative}
+.loc{display:flex;align-items:center;gap:12px;width:100%;padding:10px 6px}
+.loc>div{flex:1;display:flex;flex-direction:column}.loc small{font-size:12px;color:var(--mute)}
+.loc.alt{background:#f6f8f7;border-radius:10px;padding:10px 12px;margin-top:4px}
+.dot{width:14px;height:14px;border-radius:50%;border:3px solid;flex:none;background:#fff}.dot.g{border-color:var(--g)}.dot.r{border-color:var(--red)}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.chips button{display:flex;flex-direction:column;align-items:center;gap:6px;background:#f3f6f4;border-radius:12px;padding:12px 0;font-size:12px;color:var(--mute)}
+.chips svg{color:var(--g)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.ms{width:100%;max-width:430px;max-height:75vh;overflow:auto;background:#fff;border-radius:22px 22px 0 0;padding:20px}
+.ms h3{margin-bottom:12px}
+.search{width:100%;border:1px solid var(--line);border-radius:10px;padding:13px 14px;margin-bottom:12px;outline:0}.search:focus{border-color:var(--g)}
+.place{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line)}
+.place em{color:var(--mute);font-style:normal}
+.opt{width:100%;display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;margin-top:10px}
+.opt.on{border:2px solid var(--g);background:var(--gs);padding:11px 13px}.opt>div{flex:1}
+.vi{font-size:28px;width:48px;text-align:center}
+.driver{display:flex;align-items:center;gap:14px;margin-bottom:14px}.driver>div:last-child{display:flex;flex-direction:column;gap:2px}
+.av{border-radius:50%;background:var(--gs);color:var(--g);display:grid;place-items:center;font-weight:700;flex:none}
+.dest{display:flex;gap:12px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:14px}.dest>div{display:flex;flex-direction:column}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.act{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0;border-radius:12px;background:#f3f6f4;font-size:12px;text-align:center}
+.act.danger{background:var(--rs);color:var(--red)}
+.fbox{text-align:center;padding:18px 0 10px}.fare{font-size:34px;font-weight:800;letter-spacing:-.02em}
+.sec{font-size:15px;font-weight:600;margin:18px 0 10px}
+.pm{width:100%;display:flex;align-items:center;gap:12px;padding:15px 14px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.pm.on{border-color:var(--g);background:var(--gs)}.pm svg{color:var(--g)}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid #b9c4be;display:grid;place-items:center;flex:none}
+.pm.on .radio{border-color:var(--g)}.pm.on .radio::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--g)}
+.done{text-align:center;padding-top:48px}
+.check{width:84px;height:84px;border-radius:50%;background:var(--g);display:grid;place-items:center;margin:0 auto 16px;color:#fff;box-shadow:0 8px 22px rgba(11,143,77,.3)}
+.check svg{width:44px;height:44px;stroke-width:3}
+.total{background:var(--bg);border-radius:12px;padding:14px;margin:22px 0 8px}
+.det{display:grid;gap:8px;padding:12px 4px 4px;font-size:14px;text-align:left}.det div{display:flex;justify-content:space-between;gap:12px}.det span{color:var(--mute)}
+.stars{display:flex;justify-content:center;gap:10px}.stars button{padding:0;line-height:0}.stars svg{width:38px;height:38px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.tabs button{padding:12px;text-align:center;color:var(--mute);border-bottom:2px solid transparent}.tabs button.on{color:var(--g);font-weight:600;border-color:var(--g)}
+.rr{width:100%;display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--line)}.rr>div{flex:1}
+.empty{text-align:center;color:var(--mute);padding:40px 20px}
+.pc{width:100%;display:flex;align-items:center;gap:14px;padding:12px 16px 18px}.pc>div:nth-child(2){flex:1;display:flex;flex-direction:column;gap:2px}
+.mr{width:100%;display:flex;align-items:center;gap:14px;padding:16px;border-top:1px solid var(--line)}.mr span{flex:1}.mr.st{padding:14px 4px}
+.amts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.amts button{padding:10px 16px;border:1px solid var(--line);border-radius:10px;font-weight:600}.amts button.on{border-color:var(--g);background:var(--gs);color:var(--g)}
+.offer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px dashed var(--g);border-radius:12px;margin-bottom:12px;background:var(--gs)}
+.offer button{background:var(--g);color:#fff;padding:8px 12px;border-radius:8px;font-weight:700;font-size:13px}
+.faq{padding:12px 0;border-bottom:1px solid var(--line)}.faq p{margin-top:4px}
+.bnav{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--line);padding:8px 0 calc(8px + env(safe-area-inset-bottom))}
+.bnav a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:var(--mute)}.bnav a.on{color:var(--g);font-weight:600}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1d2a23;color:#fff;padding:11px 18px;border-radius:10px;z-index:50;font-size:14px;max-width:88vw;text-align:center}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== Data / state (sab kuch browser ke localStorage me save hota hai) ===== */
+const PLACES=[{name:'Hazratganj',lat:26.8467,lng:80.9462},{name:'Phoenix Palassio',lat:26.8206,lng:81.0071},{name:'Charbagh Station',lat:26.8316,lng:80.9231},{name:'Gomti Nagar',lat:26.8523,lng:81.0112},{name:'IT City',lat:26.7606,lng:80.9722},{name:'Airport',lat:26.7606,lng:80.8893}];
+const MYLOC={name:'My Location',lat:26.8467,lng:80.9462};
+const VEH={bike:{label:'Bike',base:20,km:8,spd:30,eta:2,icon:'🏍️'},auto:{label:'Auto',base:30,km:12,spd:25,eta:3,icon:'🛺'},mini:{label:'Mini Car',base:50,km:16,spd:28,eta:4,icon:'🚗'},suv:{label:'SUV',base:80,km:24,spd:28,eta:6,icon:'🚙'}};
+const DRIVERS=[{name:'Rahul Kumar',phone:'+919811122334',rating:4.8,rides:320,type:'mini',car:'White Swift',plate:'UP32 AB 1234'},{name:'Sunil Yadav',phone:'+919822233445',rating:4.7,rides:210,type:'mini',car:'Grey WagonR',plate:'UP32 CD 5678'},{name:'Amit Singh',phone:'+919833344556',rating:4.9,rides:540,type:'bike',car:'Black Splendor',plate:'UP32 EF 4321'},{name:'Deepak Verma',phone:'+919844455667',rating:4.6,rides:150,type:'bike',car:'Red Pulsar',plate:'UP32 GH 8765'},{name:'Manoj Gupta',phone:'+919855566778',rating:4.5,rides:410,type:'auto',car:'Yellow Bajaj Auto',plate:'UP32 JK 1122'},{name:'Vikas Pandey',phone:'+919866677889',rating:4.8,rides:275,type:'suv',car:'Black Innova',plate:'UP32 LM 3344'}];
+const OFFERS=[['FIRST50','Pehli ride par 50% off','Max ₹75 tak. Naye users ke liye.'],['BIKE20','Bike rides par ₹20 off','₹50 se upar ki bike ride par.'],['AIRPORT100','Airport ride par ₹100 off','Mini ya SUV book karo.']];
+const FAQ=[['Ride cancel kaise karu?','Driver Found screen par "Cancel Ride" dabao. Driver ke aane ke baad cancel nahi hoti.'],['Fare kaise tay hota hai?','Base fare + per km charge. Final fare ride ke baad dikhta hai.'],['Payment fail ho gaya?','Dusra payment method chuno ya Cash select karo.']];
+const DEFAULT={user:null,wallet:200,addresses:[{id:1,label:'Home',...PLACES[3]},{id:2,label:'Work',...PLACES[4]}],rides:[],active:null,pending:null,last:null};
+let S;try{S=Object.assign({},DEFAULT,JSON.parse(localStorage.getItem('rk')||'{}'))}catch{S={...DEFAULT}}
+const save=()=>localStorage.setItem('rk',JSON.stringify(S));
+
+/* ===== Helpers ===== */
+const P={back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',menu:'<path d="M3 12h18M3 6h18M3 18h18"/>',bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',home:'<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/>',briefcase:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',plane:'<path d="M2 16l20-6-3-3-5 2-7-5-2 1 5 6-4 2-2-1-1 1 3 3 4 1 1-1-1-2 3-3 5 8 1-1-1-9"/>',more:'<circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/>',chev:'<path d="M9 18l6-6-6-6"/>',phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',alert:'<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',car:'<path d="M5 17h14M3 13l2-6h14l2 6v4H3zM7 17v2M17 17v2"/>',wallet:'<path d="M20 12V8H6a2 2 0 0 1 0-4h12v4M4 6v12a2 2 0 0 0 2 2h14v-4M18 12a2 2 0 0 0 0 4h4v-4z"/>',user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',check:'<path d="M20 6L9 17l-5-5"/>',star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',locate:'<circle cx="12" cy="12" r="7"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/>',trash:'<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',tag:'<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8zM7 7h.01"/>',help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',mail:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/>',card:'<rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>',cash:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>',upi:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',arrow:'<path d="M5 12h14M12 5l7 7-7 7"/>'};
+const ic=(n,x='')=>`<svg class="i" viewBox="0 0 24 24" ${x}>${P[n]}</svg>`;
+const inr=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+const fmt=d=>new Date(d).toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}).replace(/\b(am|pm)\b/,m=>m.toUpperCase());
+const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const av=(n,s=52)=>`<div class="av" style="width:${s}px;height:${s}px;font-size:${s*.38}px">${ini(n)}</div>`;
+const logo=s=>`<div class="lw" style="font-size:${s}px">Ride<b>Karo</b></div>`;
+const hdr=(t,back=true,right='')=>`<header class="hdr">${back?`<button class="ib" aria-label="Back" onclick="history.back()">${ic('back')}</button>`:'<span style="width:36px"></span>'}<h1>${t}</h1><span style="width:36px;display:flex;justify-content:flex-end">${right}</span></header>`;
+const stars=v=>`<div class="stars">${[1,2,3,4,5].map(n=>`<button aria-label="${n} star" onclick="setRate(${n})">${ic('star',`style="fill:${n<=v?'#f5b301':'none'};stroke:${n<=v?'#f5b301':'#c5ccc8'}"`)}</button>`).join('')}</div>`;
+const nav=a=>`<nav class="bnav">${[['home','Home','home'],['rides','Rides','car'],['wallet','Wallet','wallet'],['profile','Profile','user']].map(([r,l,i])=>`<a href="#/${r}" class="${a===r?'on':''}">${ic(i)}<span>${l}</span></a>`).join('')}</nav>`;
+const driverCard=d=>`<div class="driver">${av(d.name,56)}<div><b>${d.name}</b><div class="mute"><span style="color:#f5b301">★</span> ${d.rating} (${d.rides} rides)</div><div class="mute small">${d.car} - ${d.plate}</div></div></div>`;
+let toastT;function toast(m){document.querySelectorAll('.toast').forEach(e=>e.remove());const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);clearTimeout(toastT);toastT=setTimeout(()=>t.remove(),2400)}
+const rad=x=>x*Math.PI/180;
+function dist(a,b){const dl=rad(b.lat-a.lat),dg=rad(b.lng-a.lng);const h=Math.sin(dl/2)**2+Math.cos(rad(a.lat))*Math.cos(rad(b.lat))*Math.sin(dg/2)**2;return Math.max(1,+(12742*Math.asin(Math.sqrt(h))*1.3).toFixed(1))}
+const fareOf=(t,km)=>Math.round(VEH[t].base+VEH[t].km*km);
+const go=r=>{location.hash='#/'+r};
+
+/* ===== Map (SVG, koi API key nahi chahiye) ===== */
+const pin=(x,y,c)=>`<g transform="translate(${x},${y})"><path d="M0 0C-10-14-12-22-12-26a12 12 0 1 1 24 0C12-22 10-14 0 0Z" fill="${c}"/><circle cy="-26" r="4.5" fill="#fff"/></g>`;
+const carI=(x,y,r,id='')=>`<g ${id?`id="${id}"`:''} transform="translate(${x},${y}) rotate(${r})"><rect x="-8" y="-15" width="16" height="30" rx="6" fill="#fff" stroke="#1d2a23" stroke-width="2"/><rect x="-5" y="-8" width="10" height="8" rx="2" fill="#1d2a23"/></g>`;
+const ROUTE='M90 235 C 140 205, 170 235, 215 175 S 290 125, 312 70';
+function map({h=230,route=false,moving=false,cars=[],here=false,extra=''}){
+ return `<div class="map" style="height:${h}px"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" width="100%" height="100%"><rect width="400" height="300" fill="#eef1ee"/><ellipse cx="60" cy="60" rx="50" ry="34" fill="#d8ecd6"/><ellipse cx="340" cy="250" rx="60" ry="36" fill="#d8ecd6"/><rect x="250" y="130" width="70" height="40" rx="10" fill="#d8ecd6"/><path d="M-10 120C80 80 140 170 230 120S360 20 420 60" stroke="#cfe3f1" stroke-width="16" fill="none"/><g stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"><path d="M0 200L400 170"/><path d="M0 100L400 120"/><path d="M120 0L150 300"/><path d="M260 0L240 300"/><path d="M0 280L400 250"/></g><path d="M0 40L400 260" stroke="#f6e8ad" stroke-width="5" fill="none"/><g stroke="#fff" stroke-width="3" fill="none"><path d="M50 0L70 300"/><path d="M330 0L350 300"/><path d="M0 150L400 140"/></g>
+ ${route?`<path id="rp" d="${ROUTE}" stroke="#0B8F4D" stroke-width="4" fill="none" stroke-linecap="round"/>${pin(312,70,'#e5484d')}${moving?carI(90,235,0,'cg'):pin(90,235,'#0B8F4D')}`:''}
+ ${here?`${pin(200,150,'#0B8F4D')}<circle cx="200" cy="162" r="7" fill="#2f7df6" stroke="#fff" stroke-width="3"/>`:''}
+ ${cars.map(c=>carI(...c)).join('')}</svg>${extra}</div>`}
+
+/* ===== Router ===== */
+let timers=[];const later=(f,ms)=>{const t=setTimeout(f,ms);timers.push(t)};const every=(f,ms)=>{const t=setInterval(f,ms);timers.push(t)};
+const pg=(html,cls='')=>`<div class="page ${cls}">${html}</div>`;
+let pickup=MYLOC,draft=null,sel='bike',payM='upi',rate=0;
+function render(){
+ timers.forEach(t=>{clearTimeout(t);clearInterval(t)});timers=[];document.querySelectorAll('.modal').forEach(m=>m.remove());
+ let r=(location.hash.replace(/^#\/?/,'')||'splash');
+ const open=['splash','login'];
+ if(!S.user&&!open.includes(r))r='login';
+ if(S.user&&r==='login')r='home';
+ const R={splash,login,home,choose,driver,trip,pay,done,rides,profile,wallet,addresses,offers,support};
+ if(!R[r])r='splash';
+ const el=document.getElementById('app');el.innerHTML=R[r]();window.scrollTo(0,0);
+}
+addEventListener('hashchange',render);
+
+/* ===== Screens ===== */
+function splash(){
+ later(()=>go(S.user?'home':'login'),1800);
+ return pg(`<div class="st"><div class="lb">${ic('car')}</div>${logo(44)}<p class="mute">Your Ride, Your City</p></div>
+ <svg viewBox="0 0 360 220" style="width:100%;display:block"><g fill="#cfe8d8"><rect x="90" y="70" width="36" height="110"/><rect x="132" y="40" width="30" height="140"/><rect x="168" y="85" width="40" height="95"/><rect x="214" y="55" width="30" height="125"/><rect x="250" y="95" width="36" height="85"/></g><g fill="#2e9e5b"><rect x="28" y="120" width="8" height="60"/><ellipse cx="32" cy="105" rx="26" ry="38"/><rect x="326" y="130" width="8" height="50"/><ellipse cx="330" cy="118" rx="22" ry="32"/></g><rect y="178" width="360" height="42" fill="#e7f5ed"/><path d="M70 190Q72 170 98 166L122 148Q132 142 148 142L200 142Q214 142 224 152L244 166Q272 170 276 190L276 198Q276 204 270 204L76 204Q70 204 70 198Z" fill="#2e9e5b"/><path d="M128 152L150 148L150 166L112 166ZM158 148L198 148Q206 150 212 158L222 166L158 166Z" fill="#dff3e6"/><circle cx="112" cy="204" r="17" fill="#1d2a23"/><circle cx="112" cy="204" r="7" fill="#cfd8d3"/><circle cx="236" cy="204" r="17" fill="#1d2a23"/><circle cx="236" cy="204" r="7" fill="#cfd8d3"/></svg>`,'splash');
+}
+let lstep='phone',lphone='';
+const GOOGLE='<svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 010-9.4l-7.9-6.1a24 24 0 000 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+const APPLE='<svg width="20" height="20" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>';
+function login(){
+ const ph=lstep==='phone';
+ return pg(`${ph?'':`<button class="ib" aria-label="Back" onclick="lstep='phone';render()">${ic('back')}</button>`}
+ <div style="margin-top:${ph?44:8}px"><h2 class="welcome">Welcome to<br><span class="lw" style="font-size:38px">Ride<b>Karo</b></span></h2><p class="mute">${ph?'Enter your mobile number to continue':`OTP bheja gaya +91 ${lphone}`}</p></div>
+ ${ph?`<div class="phone"><div class="cc"><span class="flag"></span> +91</div><input id="ph" inputmode="numeric" maxlength="10" placeholder="Enter mobile number" value="${lphone}" oninput="this.value=this.value.replace(/\\D/g,'');document.getElementById('sb').disabled=this.value.length!==10"></div><button id="sb" class="btn" ${lphone.length===10?'':'disabled'} onclick="sendOtp()">Send OTP</button>`
+ :`<input id="otp" class="otp" inputmode="numeric" maxlength="6" placeholder="------" oninput="this.value=this.value.replace(/\\D/g,'');document.getElementById('vb').disabled=this.value.length!==6"><p class="mute small" style="text-align:center">Demo OTP: <b>123456</b></p><button id="vb" class="btn" disabled onclick="verify()">Verify and continue</button>`}
+ <div class="or"><span>or continue with</span></div>
+ <button class="btn ghost" onclick="social('Akshay','google')">${GOOGLE} Continue with Google</button>
+ <button class="btn ghost" onclick="social('Akshay','apple')">${APPLE} Continue with Apple</button>
+ <p class="mute small terms">By continuing, you agree to our<br><b>Terms of Service</b> and <b>Privacy Policy</b>.</p>`,'pad');
+}
+function sendOtp(){lphone=document.getElementById('ph').value;if(lphone.length!==10)return toast('10 digit ka number daalo');lstep='otp';render()}
+function verify(){if(document.getElementById('otp').value!=='123456')return toast('OTP galat hai (demo OTP: 123456)');startUser({name:'Rider',phone:lphone})}
+function social(name,p){startUser({name,email:`${name.toLowerCase()}@example.com`})}
+function startUser(u){
+ S.user=u;
+ if(!S.rides.length){const d=(s)=>new Date(s).toISOString();const mk=(a,b,f,t,v)=>({id:'d'+t,pickup:{name:a},drop:{name:b},fare:f,type:v,km:5,status:'completed',paid:true,method:'upi',driver:DRIVERS[0],at:d(t)});
+ S.rides=[mk('Hazratganj','Phoenix Palassio',138,'2026-10-25T10:15','mini'),mk('Home','Charbagh Station',96,'2026-10-23T17:20','auto'),mk('IT City','Airport',220,'2026-10-20T13:10','suv'),mk('Phoenix Palassio','Gomti Nagar',110,'2026-10-18T16:45','mini'),mk('Hazratganj','IT City',85,'2026-10-15T09:30','bike')]}
+ save();lstep='phone';go('home');
+}
+
+function home(){
+ if(S.active)return void go(S.active.status==='on_the_way'?'trip':'driver');
+ const chips=[['home','Home',"quick('Home')"],['briefcase','Work',"quick('Work')"],['plane','Airport',"setDrop(PLACES[5])"],['more','More',"go('addresses')"]];
+ return pg(`<header class="hdr"><button class="ib" aria-label="Menu" onclick="go('profile')">${ic('menu')}</button>${logo(24)}<button class="ib" aria-label="Notifications" onclick="toast('Koi nayi notification nahi')">${ic('bell')}</button></header>
+ ${map({h:300,here:true,cars:[[120,70,35],[70,175,-40],[305,150,20],[330,215,70]]})}
+ <div class="sheet up"><button class="loc" onclick="openPicker('pickup')"><i class="dot g"></i><div><small>Pickup Location</small><b>${pickup.name}</b></div><span class="ib" onclick="event.stopPropagation();pickup=MYLOC;toast('Location detect ho gayi');render()">${ic('locate')}</span></button>
+ <button class="loc alt" onclick="openPicker('drop')"><i class="dot r"></i><div><small>Drop Location</small><b class="mute">Where to?</b></div>${ic('chev')}</button>
+ <div class="chips">${chips.map(([i,l,f])=>`<button onclick="${f}">${ic(i)}<span>${l}</span></button>`).join('')}</div></div>`);
+}
+function quick(l){const a=S.addresses.find(x=>x.label===l);if(a)setDrop(a);else{toast(`Pehle ${l} address save karo`);go('addresses')}}
+function setDrop(d){draft={pickup,drop:d};sel='bike';go('choose')}
+function openPicker(mode){
+ const list=[...(mode==='pickup'?[MYLOC]:[]),...S.addresses.map(a=>({...a,tag:a.label})),...PLACES];
+ const m=document.createElement('div');m.className='modal';m.onclick=()=>m.remove();
+ m.innerHTML=`<div class="ms" onclick="event.stopPropagation()"><h3>${mode==='drop'?'Kahan jaana hai?':'Pickup location'}</h3><input class="search" placeholder="Jagah dhundo" id="q"><div id="pl"></div></div>`;
+ document.body.appendChild(m);
+ const draw=()=>{const q=document.getElementById('q').value.toLowerCase();const items=list.filter(p=>p.name.toLowerCase().includes(q));window._pl=items;document.getElementById('pl').innerHTML=items.map((p,i)=>`<button class="place" onclick="pick('${mode}',${i})"><span>${p.name}${p.tag?` <em>(${p.tag})</em>`:''}</span>${ic('chev')}</button>`).join('')||'<p class="mute">Koi jagah nahi mili.</p>'};
+ document.getElementById('q').oninput=draw;draw();document.getElementById('q').focus();
+}
+function pick(mode,i){const p=window._pl[i];document.querySelector('.modal')?.remove();if(mode==='drop')setDrop(p);else{pickup=p;render()}}
+
+function choose(){
+ if(!draft)return void go('home');
+ const km=dist(draft.pickup,draft.drop);
+ return pg(`${hdr('Choose a Ride')}${map({h:170,route:true})}<div class="px mute small" style="padding-top:8px">${draft.pickup.name} to ${draft.drop.name} - ${km} km</div>
+ <div class="px grow">${Object.entries(VEH).map(([t,v])=>{const f=fareOf(t,km);return `<button class="opt ${sel===t?'on':''}" onclick="sel='${t}';render()"><span class="vi">${v.icon}</span><div><b>${v.label}</b><div class="mute small">${v.eta} min away</div></div><b>${inr(f)} - ${Math.round(f*1.3)}</b></button>`}).join('')}</div>
+ <div class="pad"><button class="btn" onclick="book()">Book Ride</button></div>`);
+}
+function book(){
+ const km=dist(draft.pickup,draft.drop);const ds=DRIVERS.filter(d=>d.type===sel);const d=ds[Math.floor(Math.random()*ds.length)];
+ S.active={id:'r'+Date.now(),pickup:draft.pickup,drop:draft.drop,type:sel,km,dur:Math.max(5,Math.round(km/VEH[sel].spd*60)),fare:fareOf(sel,km),driver:d,status:'driver_found',at:new Date().toISOString()};
+ save();go('driver');
+}
+function actions(d,danger){
+ return `<div class="acts"><a class="act" href="tel:${d.phone}">${ic('phone')}<span>Call</span></a><button class="act" onclick="toast('Chat feature jald aa raha hai')">${ic('chat')}<span>Chat</span></button><button class="act" onclick="shareRide()">${ic('share')}<span>Share</span></button>${danger?`<a class="act danger" href="tel:112">${ic('alert')}<span>Emergency</span></a>`:`<button class="act" onclick="toast('Ride share karo ya 112 par call karo')">${ic('shield')}<span>Safety</span></button>`}</div>`;
+}
+async function shareRide(){const a=S.active;if(!a)return;const t=`Meri RideKaro ride: ${a.pickup.name} se ${a.drop.name}. Driver ${a.driver.name}, ${a.driver.plate}`;try{if(navigator.share)await navigator.share({text:t});else{await navigator.clipboard.writeText(t);toast('Ride details copy ho gayi')}}catch{}}
+function driver(){
+ const a=S.active;if(!a)return void go('home');if(a.status==='on_the_way')return void go('trip');
+ let min=VEH[a.type].eta;
+ every(()=>{min--;const e=document.getElementById('eta');if(e)e.innerHTML=`Arriving in<br><b>${Math.max(min,0)} min</b>`;if(min<=0){a.status='on_the_way';save();go('trip')}},2500);
+ return pg(`${hdr('Driver Found')}${map({h:230,here:true,cars:[[110,90,45],[300,215,-30]],extra:`<div class="eta" id="eta">Arriving in<br><b>${min} min</b></div>`})}
+ <div class="sheet up grow">${driverCard(a.driver)}${actions(a.driver)}<button class="btn cancel" onclick="cancelRide()">Cancel Ride</button></div>`);
+}
+function cancelRide(){if(!confirm('Ride cancel karni hai?'))return;const a=S.active;a.status='cancelled';S.rides.unshift(a);S.active=null;save();toast('Ride cancel ho gayi');go('home')}
+function trip(){
+ const a=S.active;if(!a)return void go(S.pending?'pay':'home');
+ const T=14000,t0=Date.now();
+ setTimeout(()=>{const path=document.getElementById('rp'),car=document.getElementById('cg');if(!path||!car)return;const L=path.getTotalLength();
+  every(()=>{const p=Math.min(1,(Date.now()-t0)/T);const q=path.getPointAtLength(L*p),n=path.getPointAtLength(Math.min(L,L*p+2));
+   car.setAttribute('transform',`translate(${q.x},${q.y}) rotate(${Math.atan2(n.y-q.y,n.x-q.x)*180/Math.PI+90})`);
+   const l=document.getElementById('left');if(l)l.textContent=`${Math.ceil(a.dur*(1-p))} min (${(a.km*(1-p)).toFixed(1)} km)`;
+   if(p>=1){a.status='completed';S.pending=a;S.active=null;save();go('pay')}},100)},0);
+ return pg(`${hdr('On the way')}${map({h:260,route:true,moving:true})}
+ <div class="sheet up grow">${driverCard(a.driver)}<div class="dest"><i class="dot g"></i><div><small class="mute">Your Destination</small><b>${a.drop.name}</b><div class="gt" id="left">${a.dur} min (${a.km} km)</div></div></div>${actions(a.driver,true)}</div>`);
+}
+function pay(){
+ const r=S.pending;if(!r)return void go('home');
+ const M=[['upi','upi','UPI (GPay, PhonePe, etc.)'],['card','card','Credit / Debit Card'],['wallet','wallet',`Wallet (${inr(S.wallet)})`],['cash','cash','Cash']];
+ return pg(`${hdr('Payment',false)}<div class="fbox"><span class="mute">Fare Amount</span><div class="fare">${inr(r.fare)}</div></div>
+ <div class="px grow"><h4 class="sec">Select Payment Method</h4>${M.map(([k,i,l])=>`<button class="pm ${payM===k?'on':''}" onclick="payM='${k}';render()"><span class="radio"></span>${ic(i)}<span>${l}</span></button>`).join('')}</div>
+ <div class="pad"><button class="btn" onclick="doPay()">Pay Now</button></div>`);
+}
+function doPay(){
+ const r=S.pending;if(payM==='wallet'){if(S.wallet<r.fare)return toast('Wallet me paise kam hain');S.wallet-=r.fare}
+ r.paid=true;r.method=payM;S.rides.unshift(r);S.last=r;S.pending=null;rate=0;save();go('done');
+}
+let showDet=false;
+function done(){
+ const r=S.last;if(!r)return void go('home');
+ return pg(`<div class="check">${ic('check')}</div><h2 style="font-size:24px">Ride Completed!</h2><p class="mute">Thank you for riding with RideKaro</p>
+ <div class="total"><span>Total Fare</span><div class="fare">${inr(r.fare)}</div><button class="link" onclick="showDet=!showDet;render()">View Details ${showDet?'▲':'▼'}</button>
+ ${showDet?`<div class="det"><div><span>From</span><b>${r.pickup.name}</b></div><div><span>To</span><b>${r.drop.name}</b></div><div><span>Distance</span><b>${r.km} km</b></div><div><span>Date</span><b>${fmt(r.at)}</b></div><div><span>Paid by</span><b style="text-transform:uppercase">${r.method}</b></div></div>`:''}</div>
+ <h4 class="sec">Rate Your Driver</h4>${stars(rate)}<div class="grow"></div><button class="btn" onclick="submitRate()">${rate?'Submit Rating':'Skip'}</button>`,'pad done');
+}
+function setRate(n){rate=n;render()}
+function submitRate(){if(rate){S.last.rating=rate;const x=S.rides.find(q=>q.id===S.last.id);if(x)x.rating=rate;toast('Shukriya! Rating mil gayi')}S.last=null;save();go('home')}
+
+let rtab='completed',ropen=null;
+function rides(){
+ const L=S.rides.filter(r=>r.status===rtab).sort((a,b)=>new Date(b.at)-new Date(a.at));
+ return pg(`${hdr('My Rides')}<div class="tabs">${['completed','cancelled'].map(t=>`<button class="${rtab===t?'on':''}" onclick="rtab='${t}';ropen=null;render()">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>
+ <div class="grow">${L.map(r=>`<button class="rr" onclick="ropen=ropen==='${r.id}'?null:'${r.id}';render()"><div><b>${r.pickup.name} → ${r.drop.name}</b><div class="mute small">${fmt(r.at)}</div></div><b>${inr(r.fare)}</b>${ic('chev')}</button>
+ ${ropen===r.id?`<div class="det px" style="padding-bottom:12px"><div><span>Vehicle</span><b>${VEH[r.type].label}</b></div><div><span>Distance</span><b>${r.km} km</b></div><div><span>Driver</span><b>${r.driver.name} (${r.driver.plate})</b></div>${r.method?`<div><span>Paid by</span><b style="text-transform:uppercase">${r.method}</b></div>`:''}${r.rating?`<div><span>Your rating</span><b>${r.rating} / 5</b></div>`:''}</div>`:''}`).join('')||`<p class="empty">Abhi koi ${rtab} ride nahi hai. Home se pehli ride book karo.</p>`}</div>${nav('rides')}`);
+}
+function profile(){
+ const u=S.user;
+ const items=[['car','My Rides',"go('rides')"],['card','Payment Methods',"go('wallet')"],['pin','Saved Addresses',"go('addresses')"],['tag','Offers',"go('offers')"],['help','Help & Support',"go('support')"],['logout','Logout','logout()']];
+ return pg(`<header class="hdr left"><h1>Profile</h1><button class="ib" aria-label="Edit profile" onclick="editProfile()">${ic('gear')}</button></header>
+ <button class="pc" onclick="editProfile()">${av(u.name,64)}<div><b>${u.name}</b>${u.phone?`<div class="mute small">+91 ${u.phone}</div>`:''}${u.email?`<div class="mute small">${u.email}</div>`:''}</div>${ic('chev')}</button>
+ <div class="grow">${items.map(([i,l,f])=>`<button class="mr" onclick="${f}">${ic(i)}<span>${l}</span>${ic('chev')}</button>`).join('')}</div>${nav('profile')}`);
+}
+function editProfile(){
+ const m=document.createElement('div');m.className='modal';m.onclick=()=>m.remove();
+ m.innerHTML=`<div class="ms" onclick="event.stopPropagation()"><h3>Profile edit karo</h3><input class="search" id="en" placeholder="Naam" value="${S.user.name}"><input class="search" id="ee" placeholder="Email" value="${S.user.email||''}"><button class="btn" onclick="S.user.name=document.getElementById('en').value.trim()||S.user.name;S.user.email=document.getElementById('ee').value.trim();save();toast('Profile update ho gayi');render()">Save changes</button></div>`;
+ document.body.appendChild(m);
+}
+function logout(){S.user=null;save();go('login')}
+function wallet(){
+ return pg(`${hdr('Wallet',false)}<div class="fbox"><span class="mute">Wallet Balance</span><div class="fare">${inr(S.wallet)}</div></div>
+ <div class="pad grow"><h4 class="sec">Paise add karo</h4><div class="amts">${[100,200,500,1000].map(a=>`<button onclick="S.wallet+=${a};save();toast('${inr(a)} wallet me add ho gaye');render()">+ ${inr(a)}</button>`).join('')}</div><p class="mute small">Demo app hai, isliye paise seedhe add ho jaate hain.</p></div>${nav('wallet')}`);
+}
+let alabel='Home';
+function addresses(){
+ return pg(`${hdr('Saved Addresses')}<div class="pad grow">${S.addresses.map(a=>`<div class="mr st"><b>${a.label}</b><span class="mute">${a.name}</span><button class="ib" aria-label="Delete" onclick="S.addresses=S.addresses.filter(x=>x.id!==${a.id});save();render()">${ic('trash')}</button></div>`).join('')||'<p class="empty">Koi address save nahi hai.</p>'}
+ <h4 class="sec">Naya address</h4><div class="amts">${['Home','Work','Other'].map(l=>`<button class="${alabel===l?'on':''}" onclick="alabel='${l}';render()">${l}</button>`).join('')}</div>
+ <input class="search" id="an" placeholder="Address / area ka naam"><button class="btn" onclick="addAddr()">Save address</button></div>`);
+}
+function addAddr(){const n=document.getElementById('an').value.trim();if(!n)return toast('Address likho');const base=PLACES.find(p=>p.name.toLowerCase()===n.toLowerCase())||{lat:26.85+Math.random()*.03,lng:80.94+Math.random()*.06};S.addresses.push({id:Date.now(),label:alabel,name:n,lat:base.lat,lng:base.lng});save();render()}
+function offers(){return pg(`${hdr('Offers')}<div class="pad grow">${OFFERS.map(([c,t,d])=>`<div class="offer"><div><b>${t}</b><div class="mute small">${d}</div></div><button onclick="navigator.clipboard&&navigator.clipboard.writeText('${c}');toast('${c} copy ho gaya')">${c}</button></div>`).join('')}</div>`)}
+function support(){return pg(`${hdr('Help & Support')}<div class="pad grow">${FAQ.map(([q,a])=>`<div class="faq"><b>${q}</b><p class="mute">${a}</p></div>`).join('')}<a class="btn ghost" href="tel:1800123456">${ic('phone')} Call support</a><a class="btn ghost" href="mailto:support@ridekaro.app">${ic('mail')} Email support</a></div>`)}
+
+render();
+</script>
+</body>
+</html>
