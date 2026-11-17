@@ -1,56 +1,161 @@
 # RideKaro - MERN Ride Sharing App
 
-React (Vite) + Node/Express + MongoDB. Pura flow: Splash -> OTP Login -> Home -> Choose Ride -> Driver Found -> On the Way -> Payment -> Ride Completed + Rating -> My Rides -> Profile (Wallet, Addresses, Offers, Support).
+A full-stack ride-sharing application built using React (Vite), Node.js, Express.js, and MongoDB.
 
-## Pehle ye chahiye
-1. **Node.js 18+** (https://nodejs.org)
-2. **MongoDB** - ya to local install (https://www.mongodb.com/try/download/community) ya free MongoDB Atlas.
-   Atlas use karna ho to `server/.env` me `MONGO_URI` apna connection string daal do.
+## Features
 
-## Run karna (sirf 2 command)
+- Splash Screen
+- OTP Login
+- Home Screen
+- Choose Ride
+- Driver Assignment
+- Live Ride Status (Demo)
+- Payment
+- Ride Completion and Rating
+- My Rides
+- User Profile
+- Wallet
+- Saved Addresses
+- Offers and Support
+
+## Tech Stack
+
+**Frontend:**
+- React.js
+- Vite
+- JavaScript
+- CSS
+
+**Backend:**
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+## Project Structure
+
+```text
+RideSharingApp/
+│
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── pages/
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   ├── constants.js
+│   │   └── main.jsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+├── server/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   ├── server.js
+│   └── package.json
+│
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+## Prerequisites
+
+Before running this project, install:
+
+1. Node.js 18 or above
+2. MongoDB (Local MongoDB or MongoDB Atlas)
+3. Git
+
+## Installation
+
+Clone the repository:
+
 ```bash
-npm install     # root, server aur client - teeno ke packages ek saath install
-npm run dev     # backend (5000) + frontend (5173) dono chalu
-```
-Browser me kholo: **http://localhost:5173** (mobile size me dekhne ke liye DevTools -> device toolbar).
-
-## Login kaise kare
-- Koi bhi 10 digit number daalo -> Send OTP -> **OTP: 123456** (screen par bhi dikhega).
-- Ya "Continue with Google / Apple" dabao (demo login, real OAuth nahi).
-
-## Ride demo flow
-Home me "Where to?" -> jagah chuno -> ride type chuno -> Book Ride. Driver automatic assign hota hai (demo drivers pehli baar server start par seed ho jaate hain). Driver aata hai, ride chalti hai aur khud complete ho jaati hai (simulation), phir payment aur rating.
-
-## Folder structure
-```
-ridekaro/
-  server/   Express API (models, routes, middleware, utils/fare.js, utils/seed.js, .env)
-  client/   React app (src/pages, src/components, src/context)
+git clone https://github.com/akshaykumardeval77-star/RideSharingApp.git
 ```
 
-## API (short)
-| Method | Route | Kaam |
-|---|---|---|
-| POST | /api/auth/send-otp, /verify-otp, /social | Login |
-| GET/PUT | /api/auth/me | Profile |
-| GET | /api/rides/places | Popular jagah |
-| POST | /api/rides/estimate | Fare options |
-| POST | /api/rides | Ride book |
-| GET | /api/rides, /rides/active, /rides/:id | Rides list |
-| PATCH | /api/rides/:id/status | on_the_way / completed |
-| POST | /api/rides/:id/cancel, /pay, /rate | Cancel, Payment, Rating |
-| GET/POST | /api/user/wallet, /wallet/add | Wallet |
-| GET/POST/DELETE | /api/user/addresses | Saved addresses |
-| GET | /api/user/offers | Offers |
+Go to the project directory:
 
-## Production build
+```bash
+cd RideSharingApp
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+## Environment Variables
+
+Create a `.env` file inside the `server` folder.
+
+Add your configuration:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+Use your own MongoDB connection string and a secure JWT secret.
+
+## Run the Project
+
+Start both frontend and backend:
+
+```bash
+npm run dev
+```
+
+Open in browser:
+
+```text
+http://localhost:5173
+```
+
+## Demo Login
+
+- Enter any 10-digit mobile number.
+- Click Send OTP.
+- Demo OTP: `123456`
+
+Google and Apple login options are demo interfaces, not real OAuth authentication.
+
+## Production Build
+
+Build the frontend:
+
 ```bash
 npm --prefix client run build
-npm start      # Express hi React build ko http://localhost:5000 par serve karega
 ```
 
-## Baad me real banane ke liye
-- Real SMS OTP: `server/routes/auth.js` me MSG91/Twilio lagao aur `devOtp` response se hata do.
-- Real map: client me Leaflet/Google Maps; ab SVG demo map hai (`components/MapView.jsx`).
-- Real payment: Razorpay; live driver tracking: Socket.io.
-- `server/.env` me `JWT_SECRET` badalna mat bhoolna.
+Start the backend:
+
+```bash
+npm start
+```
+
+## Future Improvements
+
+- Real SMS OTP Integration
+- Google Maps Integration
+- Live Driver Tracking
+- Razorpay Payment Gateway
+- Socket.io Real-Time Updates
+- Improved Authentication and Security
+
+## Author
+
+**Akshay Kumar Deval**
+
+GitHub: https://github.com/akshaykumardeval77-star
+
+---
+
+**RideKaro - Making Every Journey Easier!**
